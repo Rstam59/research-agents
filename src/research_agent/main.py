@@ -31,13 +31,30 @@ def main() -> None:
 
     result = app.invoke({
         "topic": topic,
+        'search_queries': [],
+        'sources': [],
+        'scored_sources': [],
         "notes": [],
         "draft": ""
     })
 
     logger.info("Research agent finished")
 
-    print("Final Research Draft:")
+    print('===========SEARCH QUERIES============')
+    for query in result['search_queries']:
+        print(f'- {query}')
+
+
+    print('===========SOURCES============')
+    for i, source in enumerate(result['scored_sources'], start=1):
+        print(f"{i} {source['title']}")
+        print(f'.  URL: {source["url"]}')
+        print(f"   Type: {source['source_type']}")
+        print(f"   Quality score: {source['quality_score']}")
+        print(f"   Quality reason: {source['quality_reason']}")
+
+
+    print("==========Final Research Draft:==============")
     print(result['draft'])
 
 
